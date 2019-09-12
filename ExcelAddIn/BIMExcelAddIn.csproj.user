@@ -4,5 +4,6 @@
     <PublishUrlHistory>发布\</PublishUrlHistory>
     <InstallUrlHistory />
     <SupportUrlHistory />
+    <ProjectView>ShowAllFiles</ProjectView>
   </PropertyGroup>
 </Project>

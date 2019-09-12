@@ -15,11 +15,11 @@ namespace ExcelAddIn
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
             //TODO:加载初始化数据，如数据库连接
-            string appsetting = ConfigurationSettings.AppSettings["excel"].ToString();
+            string appsetting = ConfigurationManager.AppSettings["excel"].ToString();
             
         }
 
-        private void system_group_Click(object sender, RibbonControlEventArgs e)
+        private void System_Group_Click(object sender, RibbonControlEventArgs e)
         {
             //声明一个Excel的单元格区域变量。
             Excel.Range rang;
@@ -59,7 +59,7 @@ namespace ExcelAddIn
 
         private void group1_DialogLauncherClick(object sender, RibbonControlEventArgs e)
         {
-            Form1 fm1 = new Form1();//创建新实例。
+            ConfigPanel fm1 = new ConfigPanel();//创建新实例。
             fm1.ShowDialog();//以对话框的形式，在Excel中显示Form1。
         }
     }
