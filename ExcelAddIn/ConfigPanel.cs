@@ -25,9 +25,18 @@ namespace ExcelAddIn
         {
             string appsetting = ConfigurationManager.ConnectionStrings["mysql"].ToString();
             MySqlConnection conn = new MySqlConnection(appsetting);
-            conn.Open();
-            string state = conn.State.ToString();
-            string message = state == "Open" ? "测试连接成功！" : "测试连接失败！";
+            string message = string.Empty;
+            try
+            {
+                Console.WriteLine(conn.ConnectionTimeout);
+                conn.Open();
+                string state = conn.State.ToString();
+                message = state == "Open" ? "测试连接成功！" : "测试连接失败！";
+            }
+            catch (Exception ex)
+            {
+                message = "测试连接失败！";
+            }
             CCWin.MessageBoxEx.Show(message);
         }
 
