@@ -39,9 +39,9 @@
             Microsoft.Office.Tools.Ribbon.RibbonDialogLauncher ribbonDialogLauncherImpl3 = this.Factory.CreateRibbonDialogLauncher();
             this.tab1 = this.Factory.CreateRibbonTab();
             this.group = this.Factory.CreateRibbonGroup();
-            this.systemGroup = this.Factory.CreateRibbonButton();
+            this.SingleCell = this.Factory.CreateRibbonButton();
             this.separator1 = this.Factory.CreateRibbonSeparator();
-            this.button1 = this.Factory.CreateRibbonButton();
+            this.MultiCell = this.Factory.CreateRibbonButton();
             this.group1 = this.Factory.CreateRibbonGroup();
             this.button2 = this.Factory.CreateRibbonButton();
             this.separator2 = this.Factory.CreateRibbonSeparator();
@@ -69,36 +69,36 @@
             // group
             // 
             this.group.DialogLauncher = ribbonDialogLauncherImpl1;
-            this.group.Items.Add(this.systemGroup);
+            this.group.Items.Add(this.SingleCell);
             this.group.Items.Add(this.separator1);
-            this.group.Items.Add(this.button1);
+            this.group.Items.Add(this.MultiCell);
             this.group.Label = "文本预处理";
             this.group.Name = "group";
-            this.group.DialogLauncherClick += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.group1_DialogLauncherClick);
             // 
-            // systemGroup
+            // SingleCell
             // 
-            this.systemGroup.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.systemGroup.Image = global::ExcelAddIn.Properties.Resources._1145472;
-            this.systemGroup.Label = "系统分组";
-            this.systemGroup.Name = "systemGroup";
-            this.systemGroup.ShowImage = true;
-            this.systemGroup.SuperTip = "格式化文本为SQL需要的格式";
-            this.systemGroup.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.System_Group_Click);
+            this.SingleCell.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.SingleCell.Image = global::ExcelAddIn.Properties.Resources._1145472;
+            this.SingleCell.Label = "单元格格式化";
+            this.SingleCell.Name = "SingleCell";
+            this.SingleCell.ShowImage = true;
+            this.SingleCell.SuperTip = "格式化单个单元格的文本为SQL需要的格式，可同时操作多个单元格。";
+            this.SingleCell.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.SingleCell_Click);
             // 
             // separator1
             // 
             this.separator1.Name = "separator1";
             // 
-            // button1
+            // MultiCell
             // 
-            this.button1.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.button1.Image = global::ExcelAddIn.Properties.Resources._1145507;
-            this.button1.Label = "系统分类";
-            this.button1.Name = "button1";
-            this.button1.OfficeImageId = "Call";
-            this.button1.ShowImage = true;
-            this.button1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.System_Group_Click);
+            this.MultiCell.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.MultiCell.Image = global::ExcelAddIn.Properties.Resources._1145507;
+            this.MultiCell.Label = "跨单元格格式化";
+            this.MultiCell.Name = "MultiCell";
+            this.MultiCell.OfficeImageId = "Call";
+            this.MultiCell.ShowImage = true;
+            this.MultiCell.SuperTip = "格式化多个单元格的文本为SQL需要的格式，将多个单元格的文本组装在一起。";
+            this.MultiCell.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.MultiCell_Click);
             // 
             // group1
             // 
@@ -119,7 +119,7 @@
             this.button2.Name = "button2";
             this.button2.OfficeImageId = "Call";
             this.button2.ShowImage = true;
-            this.button2.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.System_Group_Click);
+            this.button2.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.SingleCell_Click);
             // 
             // separator2
             // 
@@ -133,17 +133,17 @@
             this.button4.Name = "button4";
             this.button4.OfficeImageId = "Call";
             this.button4.ShowImage = true;
-            this.button4.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.System_Group_Click);
+            this.button4.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.SingleCell_Click);
             // 
             // button3
             // 
             this.button3.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.button3.Image = global::ExcelAddIn.Properties.Resources._1170739;
+            this.button3.Image = global::ExcelAddIn.Properties.Resources._1145507;
             this.button3.Label = "三级系统";
             this.button3.Name = "button3";
             this.button3.OfficeImageId = "Call";
             this.button3.ShowImage = true;
-            this.button3.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.System_Group_Click);
+            this.button3.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.SingleCell_Click);
             // 
             // group2
             // 
@@ -153,7 +153,6 @@
             this.group2.Items.Add(this.button6);
             this.group2.Label = "数据查询";
             this.group2.Name = "group2";
-            this.group2.DialogLauncherClick += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.group1_DialogLauncherClick);
             // 
             // button5
             // 
@@ -163,7 +162,7 @@
             this.button5.Name = "button5";
             this.button5.ShowImage = true;
             this.button5.SuperTip = "格式化文本为SQL需要的格式";
-            this.button5.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.System_Group_Click);
+            this.button5.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.SingleCell_Click);
             // 
             // separator3
             // 
@@ -177,7 +176,7 @@
             this.button6.Name = "button6";
             this.button6.OfficeImageId = "Call";
             this.button6.ShowImage = true;
-            this.button6.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.System_Group_Click);
+            this.button6.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.SingleCell_Click);
             // 
             // Ribbon1
             // 
@@ -201,9 +200,9 @@
 
         internal Microsoft.Office.Tools.Ribbon.RibbonTab tab1;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton systemGroup;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton SingleCell;
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator1;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton button1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton MultiCell;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button2;
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator2;

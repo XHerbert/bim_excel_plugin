@@ -19,7 +19,10 @@ namespace ExcelAddIn
         public ConfigPanel()
         {
             InitializeComponent();
+            BuildDataSource();
         }
+
+        private bool update = false;
 
         private void skinButton2_Click(object sender, EventArgs e)
         {
@@ -49,21 +52,49 @@ namespace ExcelAddIn
 
 
             //获取appSettings节点
-            AppSettingsSection appSettings = (AppSettingsSection)config.GetSection("connectionStrings");
+            AppSettingsSection appSettings = (AppSettingsSection)config.GetSection("appSettings");
 
             //获取连接串节点
             ConnectionStringsSection connectionSettings = (ConnectionStringsSection)config.GetSection("connectionStrings");
-
-
+            connectionSettings.ConnectionStrings.Remove(skinTextBox4.Text);
+            connectionSettings.ConnectionStrings.Add(new ConnectionStringSettings
+            {
+                Name = skinTextBox4.Text,
+                ConnectionString = $"server={skinTextBox3.Text};User Id={skinTextBox1.Text};password={skinTextBox2.Text};Database={skinTextBox5.Text}",
+                ProviderName = "MySql.Data.MySqlClient"
+            });
+            update = true;
             //删除name，然后添加新值
-            //appSettings.Settings.Remove("name");
-            appSettings.Settings.Add("name", "new");
-
-            //connectionSettings.ConnectionStrings.
-
+            appSettings.Settings.Remove("name");
+            appSettings.Settings.Add("name", "user");
 
             //保存配置文件
             config.Save();
+            ConfigurationManager.RefreshSection("connectionStrings");
+            ConfigurationManager.RefreshSection("appSettings");
+        }
+
+        private void skinComboBox1_Click(object sender, EventArgs e)
+        {
+            if (update == true)
+            {
+                BuildDataSource();
+                update = false;
+            }
+        }
+
+        private void BuildDataSource()
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            ConnectionStringsSection connectionSettings = (ConnectionStringsSection)config.GetSection("connectionStrings");
+            List<string> dataSource = new List<string>();
+
+            int count = connectionSettings.ConnectionStrings.Count;
+            for (int i = 0; i < count; i++)
+            {
+                dataSource.Add(connectionSettings.ConnectionStrings[i].Name);
+            }
+            skinComboBox1.DataSource = dataSource;
         }
     }
 }
