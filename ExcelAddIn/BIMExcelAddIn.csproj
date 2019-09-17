@@ -200,6 +200,21 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="Common\Settings.cs" />
+    <Compile Include="Entity\ConnectionEntity.cs" />
+    <Compile Include="Entity\SettingEntity.cs" />
+    <Compile Include="QueryConfigPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryConfigPanel.Designer.cs">
+      <DependentUpon>QueryConfigPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TextConfigPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TextConfigPanel.Designer.cs">
+      <DependentUpon>TextConfigPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="ConfigPanel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -209,6 +224,12 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <EmbeddedResource Include="QueryConfigPanel.resx">
+      <DependentUpon>QueryConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextConfigPanel.resx">
+      <DependentUpon>TextConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ConfigPanel.resx">
       <DependentUpon>ConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
@@ -225,7 +246,9 @@
     <EmbeddedResource Include="Ribbon1.resx">
       <DependentUpon>Ribbon1.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="BIMExcelAddIn_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

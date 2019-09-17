@@ -12,13 +12,12 @@ using System.Configuration;
 using CCWin.SkinControl;
 using System.Reflection;
 using CCWin;
-using ExcelAddIn.Common;
 
 namespace ExcelAddIn
 {
-    public partial class ConfigPanel : Form
+    public partial class TextConfigPanel : Form
     {
-        public ConfigPanel()
+        public TextConfigPanel()
         {
             InitializeComponent();
             BuildDataSource();
@@ -28,9 +27,7 @@ namespace ExcelAddIn
 
         private void skinButton2_Click(object sender, EventArgs e)
         {
-            Settings settings = new Settings();
-            string current = settings.GetSettingValue("active");
-            string appsetting = ConfigurationManager.ConnectionStrings[current].ToString();
+            string appsetting = ConfigurationManager.ConnectionStrings["mysql"].ToString();
             MySqlConnection conn = new MySqlConnection(appsetting);
             string message = string.Empty;
             try
@@ -44,22 +41,38 @@ namespace ExcelAddIn
             {
                 message = "测试连接失败！";
             }
-            MessageBoxEx.Show(message);
+            CCWin.MessageBoxEx.Show(message);
         }
 
         private void skinButton1_Click(object sender, EventArgs e)
-        {            
-            Settings settings = new Settings();
-            settings.RemoveConnection(skinTextBox4.Text);
-            settings.AddConnection(new Entity.ConnectionEntity
+        {
+            string assemblyConfigFile = Assembly.GetExecutingAssembly().Location;
+            string appDomainConfigFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
+
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+
+            //获取appSettings节点
+            AppSettingsSection appSettings = (AppSettingsSection)config.GetSection("appSettings");
+
+            //获取连接串节点
+            ConnectionStringsSection connectionSettings = (ConnectionStringsSection)config.GetSection("connectionStrings");
+            connectionSettings.ConnectionStrings.Remove(skinTextBox4.Text);
+            connectionSettings.ConnectionStrings.Add(new ConnectionStringSettings
             {
-                ConnectionName = skinTextBox4.Text,
-                Host = skinTextBox3.Text,
-                UserName = skinTextBox1.Text,
-                Password = skinTextBox2.Text,
-                Database = skinTextBox5.Text
-            });            
-            update = true;            
+                Name = skinTextBox4.Text,
+                ConnectionString = $"server={skinTextBox3.Text};User Id={skinTextBox1.Text};password={skinTextBox2.Text};Database={skinTextBox5.Text}",
+                ProviderName = "MySql.Data.MySqlClient"
+            });
+            update = true;
+            //删除name，然后添加新值
+            appSettings.Settings.Remove("name");
+            appSettings.Settings.Add("name", "user");
+
+            //保存配置文件
+            config.Save();
+            ConfigurationManager.RefreshSection("connectionStrings");
+            ConfigurationManager.RefreshSection("appSettings");
         }
 
         private void skinComboBox1_Click(object sender, EventArgs e)
@@ -83,17 +96,6 @@ namespace ExcelAddIn
                 dataSource.Add(connectionSettings.ConnectionStrings[i].Name);
             }
             skinComboBox1.DataSource = dataSource;
-        }
-
-        private void skinButton4_Click(object sender, EventArgs e)
-        {
-            string currentConnection = skinComboBox1.SelectedItem.ToString();
-            Settings settings = new Settings();
-            Entity.SettingEntity settingEntity = new Entity.SettingEntity();
-            settingEntity.value = currentConnection;
-            settings.RemoveSettings(settingEntity.key);
-            settings.AddSettings(settingEntity);
-            MessageBoxEx.Show($"连接[{currentConnection}]已激活");
         }
     }
 }

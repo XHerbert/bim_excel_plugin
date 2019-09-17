@@ -115,5 +115,17 @@ namespace ExcelAddIn
         {
 
         }
+
+        private void group_DialogLauncherClick(object sender, RibbonControlEventArgs e)
+        {
+            TextConfigPanel panel = new TextConfigPanel();
+            panel.ShowDialog();
+        }
+
+        private void group2_DialogLauncherClick(object sender, RibbonControlEventArgs e)
+        {
+            QueryConfigPanel panel = new QueryConfigPanel();
+            panel.ShowDialog();
+        }
     }
 }
