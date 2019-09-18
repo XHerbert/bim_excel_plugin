@@ -7,17 +7,24 @@ using Excel = Microsoft.Office.Interop.Excel;//using Excel
 using System.Windows.Forms;
 using System.Configuration;
 using CCWin.SkinControl;
+using ExcelAddIn.Common;
+using MySql.Data.MySqlClient;
+using ExcelAddIn.Data;
+using ExcelAddIn.Events;
 
 namespace ExcelAddIn
 {
     public partial class Ribbon1
     {
-
+        public event EventHandler SendMsgEvent;
+        private ReferenceComponents refercomponents;
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
             //TODO:加载初始化数据，如数据库连接
-            string appsetting = ConfigurationManager.AppSettings["excel"].ToString();
-            
+            //string appsetting = ConfigurationManager.AppSettings["excel"].ToString();
+            refercomponents = new ReferenceComponents();
+            SendMsgEvent += refercomponents.AfterParentFrmTextChange;
+
         }
 
         private void SingleCell_Click(object sender, RibbonControlEventArgs e)
@@ -32,16 +39,16 @@ namespace ExcelAddIn
 
             //所选区域底纹颜色设置为黄色。
             //rang.Interior.Color = System.Drawing.Color.Yellow;            
-            int columns = rang.Columns.Count+1;
-            int rows = rang.Rows.Count+1;
-            
+            int columns = rang.Columns.Count + 1;
+            int rows = rang.Rows.Count + 1;
+
             // 遍历时先列后行，否则会出现矩阵反转
             for (int i = 1; i < columns; i++)
             {
                 for (int k = 1; k < rows; k++)
                 {
-                    Excel.Range cell  = rang.Item[i][k];
-                    if(cell.Value2 == null)
+                    Excel.Range cell = rang.Item[i][k];
+                    if (cell.Value2 == null)
                     {
                         continue;
                     }
@@ -49,15 +56,16 @@ namespace ExcelAddIn
                     if (!cellValue.Contains(','))
                     {
                         cell.Value2 = "'" + cellValue.Trim() + "'";
-                    }else
+                    }
+                    else
                     {
                         cellValue = cellValue.Replace(",", "','");
                         cell.Value2 = "'" + cellValue.Trim() + "'";
                     }
-                    
+
                 }
             }
-            
+
         }
 
         private void group1_DialogLauncherClick(object sender, RibbonControlEventArgs e)
@@ -126,6 +134,36 @@ namespace ExcelAddIn
         {
             QueryConfigPanel panel = new QueryConfigPanel();
             panel.ShowDialog();
+        }
+
+
+        private void button6_Click(object sender, RibbonControlEventArgs e)
+        {
+            string systems = "SAS 145";
+            string fileId = "1681888161170880";
+            string objectId = "1681888161170880.23546";
+            //弹出新窗体，查询指定的系统下构件集合
+            DataSource dataSource = new DataSource();
+            MySqlConnection connection = (MySqlConnection)dataSource.GetCurrentConnection("mysql");
+            StringBuilder builder = new StringBuilder();
+            using (connection)
+            {
+                connection.Open();
+                MySqlCommand cmd = new MySqlCommand(string.Format(ExcuteSql.SYSTEM_FILTER, systems, fileId), connection);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                builder.Append("[");
+                while (reader.Read())
+                {
+                    object o = reader[0];
+                    builder.Append("\"");
+                    builder.Append(o.ToString()).Append("\",");
+                }
+                builder.Append("]");
+                builder.Remove(builder.Length - 2, 1);
+            }
+            SendMsgEvent(this, new CustonEventArgs() { Text = builder.ToString() , ObjectId = objectId });
+            refercomponents.ShowDialog();
+
         }
     }
 }

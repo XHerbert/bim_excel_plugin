@@ -39,17 +39,17 @@
             Microsoft.Office.Tools.Ribbon.RibbonDialogLauncher ribbonDialogLauncherImpl3 = this.Factory.CreateRibbonDialogLauncher();
             this.tab1 = this.Factory.CreateRibbonTab();
             this.group = this.Factory.CreateRibbonGroup();
-            this.separator1 = this.Factory.CreateRibbonSeparator();
-            this.group1 = this.Factory.CreateRibbonGroup();
-            this.separator2 = this.Factory.CreateRibbonSeparator();
-            this.group2 = this.Factory.CreateRibbonGroup();
-            this.separator3 = this.Factory.CreateRibbonSeparator();
             this.SingleCell = this.Factory.CreateRibbonButton();
+            this.separator1 = this.Factory.CreateRibbonSeparator();
             this.MultiCell = this.Factory.CreateRibbonButton();
+            this.group1 = this.Factory.CreateRibbonGroup();
             this.button2 = this.Factory.CreateRibbonButton();
+            this.separator2 = this.Factory.CreateRibbonSeparator();
             this.button4 = this.Factory.CreateRibbonButton();
             this.button3 = this.Factory.CreateRibbonButton();
+            this.group2 = this.Factory.CreateRibbonGroup();
             this.button5 = this.Factory.CreateRibbonButton();
+            this.separator3 = this.Factory.CreateRibbonSeparator();
             this.button6 = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.group.SuspendLayout();
@@ -62,9 +62,8 @@
             this.tab1.Groups.Add(this.group);
             this.tab1.Groups.Add(this.group1);
             this.tab1.Groups.Add(this.group2);
-            this.tab1.Label = "BIM应用";
+            this.tab1.Label = "BIM应用插件";
             this.tab1.Name = "tab1";
-            this.tab1.Position = this.Factory.RibbonPosition.BeforeOfficeId("TabInsert");
             // 
             // group
             // 
@@ -76,48 +75,21 @@
             this.group.Name = "group";
             this.group.DialogLauncherClick += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.group_DialogLauncherClick);
             // 
-            // separator1
-            // 
-            this.separator1.Name = "separator1";
-            // 
-            // group1
-            // 
-            this.group1.DialogLauncher = ribbonDialogLauncherImpl2;
-            this.group1.Items.Add(this.button2);
-            this.group1.Items.Add(this.separator2);
-            this.group1.Items.Add(this.button4);
-            this.group1.Items.Add(this.button3);
-            this.group1.Label = "数据导入";
-            this.group1.Name = "group1";
-            this.group1.DialogLauncherClick += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.group1_DialogLauncherClick);
-            // 
-            // separator2
-            // 
-            this.separator2.Name = "separator2";
-            // 
-            // group2
-            // 
-            this.group2.DialogLauncher = ribbonDialogLauncherImpl3;
-            this.group2.Items.Add(this.button5);
-            this.group2.Items.Add(this.separator3);
-            this.group2.Items.Add(this.button6);
-            this.group2.Label = "数据查询";
-            this.group2.Name = "group2";
-            this.group2.DialogLauncherClick += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.group2_DialogLauncherClick);
-            // 
-            // separator3
-            // 
-            this.separator3.Name = "separator3";
-            // 
             // SingleCell
             // 
             this.SingleCell.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
             this.SingleCell.Image = global::ExcelAddIn.Properties.Resources._1145472;
             this.SingleCell.Label = "单元格格式化";
             this.SingleCell.Name = "SingleCell";
+            this.SingleCell.ScreenTip = "单元格格式化";
             this.SingleCell.ShowImage = true;
             this.SingleCell.SuperTip = "格式化单个单元格的文本为SQL需要的格式，可同时操作多个单元格。";
+            this.SingleCell.Tag = "";
             this.SingleCell.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.SingleCell_Click);
+            // 
+            // separator1
+            // 
+            this.separator1.Name = "separator1";
             // 
             // MultiCell
             // 
@@ -130,6 +102,17 @@
             this.MultiCell.SuperTip = "格式化多个单元格的文本为SQL需要的格式，将多个单元格的文本组装在一起。";
             this.MultiCell.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.MultiCell_Click);
             // 
+            // group1
+            // 
+            this.group1.DialogLauncher = ribbonDialogLauncherImpl2;
+            this.group1.Items.Add(this.button2);
+            this.group1.Items.Add(this.separator2);
+            this.group1.Items.Add(this.button4);
+            this.group1.Items.Add(this.button3);
+            this.group1.Label = "数据导入";
+            this.group1.Name = "group1";
+            this.group1.DialogLauncherClick += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.group1_DialogLauncherClick);
+            // 
             // button2
             // 
             this.button2.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -138,6 +121,10 @@
             this.button2.Name = "button2";
             this.button2.OfficeImageId = "Call";
             this.button2.ShowImage = true;
+            // 
+            // separator2
+            // 
+            this.separator2.Name = "separator2";
             // 
             // button4
             // 
@@ -157,6 +144,16 @@
             this.button3.OfficeImageId = "Call";
             this.button3.ShowImage = true;
             // 
+            // group2
+            // 
+            this.group2.DialogLauncher = ribbonDialogLauncherImpl3;
+            this.group2.Items.Add(this.button5);
+            this.group2.Items.Add(this.separator3);
+            this.group2.Items.Add(this.button6);
+            this.group2.Label = "数据查询";
+            this.group2.Name = "group2";
+            this.group2.DialogLauncherClick += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.group2_DialogLauncherClick);
+            // 
             // button5
             // 
             this.button5.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -166,6 +163,10 @@
             this.button5.ShowImage = true;
             this.button5.SuperTip = "格式化文本为SQL需要的格式";
             // 
+            // separator3
+            // 
+            this.separator3.Name = "separator3";
+            // 
             // button6
             // 
             this.button6.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -174,6 +175,7 @@
             this.button6.Name = "button6";
             this.button6.OfficeImageId = "Call";
             this.button6.ShowImage = true;
+            this.button6.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button6_Click);
             // 
             // Ribbon1
             // 

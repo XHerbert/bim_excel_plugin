@@ -117,6 +117,7 @@
     <DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <!--
     This section defines properties that are set when the "Release" configuration is selected.
@@ -142,6 +143,7 @@
     <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <!--
     This section specifies references for the project.
@@ -200,14 +202,23 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="Common\DataSource.cs" />
     <Compile Include="Common\Settings.cs" />
+    <Compile Include="Data\ExcuteSql.cs" />
     <Compile Include="Entity\ConnectionEntity.cs" />
     <Compile Include="Entity\SettingEntity.cs" />
+    <Compile Include="Events\CustonEventArgs.cs" />
     <Compile Include="QueryConfigPanel.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="QueryConfigPanel.Designer.cs">
       <DependentUpon>QueryConfigPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReferenceComponents.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReferenceComponents.Designer.cs">
+      <DependentUpon>ReferenceComponents.cs</DependentUpon>
     </Compile>
     <Compile Include="TextConfigPanel.cs">
       <SubType>Form</SubType>
@@ -226,6 +237,9 @@
     </Compile>
     <EmbeddedResource Include="QueryConfigPanel.resx">
       <DependentUpon>QueryConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReferenceComponents.resx">
+      <DependentUpon>ReferenceComponents.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TextConfigPanel.resx">
       <DependentUpon>TextConfigPanel.cs</DependentUpon>
