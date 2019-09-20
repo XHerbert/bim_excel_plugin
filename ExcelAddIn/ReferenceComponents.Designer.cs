@@ -32,6 +32,7 @@
             this.skinGroupBox1 = new CCWin.SkinControl.SkinGroupBox();
             this.skinTextBox1 = new CCWin.SkinControl.SkinTextBox();
             this.skinButton1 = new CCWin.SkinControl.SkinButton();
+            this.skinLabel1 = new CCWin.SkinControl.SkinLabel();
             this.skinGroupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -87,7 +88,9 @@
             this.skinTextBox1.SkinTxt.Location = new System.Drawing.Point(5, 5);
             this.skinTextBox1.SkinTxt.Multiline = true;
             this.skinTextBox1.SkinTxt.Name = "BaseText";
-            this.skinTextBox1.SkinTxt.Size = new System.Drawing.Size(602, 277);
+            this.skinTextBox1.SkinTxt.ReadOnly = true;
+            this.skinTextBox1.SkinTxt.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.skinTextBox1.SkinTxt.Size = new System.Drawing.Size(602, 303);
             this.skinTextBox1.SkinTxt.TabIndex = 0;
             this.skinTextBox1.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
             this.skinTextBox1.SkinTxt.WaterText = "";
@@ -116,11 +119,23 @@
             this.skinButton1.UseVisualStyleBackColor = false;
             this.skinButton1.Click += new System.EventHandler(this.skinButton1_Click);
             // 
+            // skinLabel1
+            // 
+            this.skinLabel1.AutoSize = true;
+            this.skinLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.skinLabel1.BorderColor = System.Drawing.Color.White;
+            this.skinLabel1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.skinLabel1.Location = new System.Drawing.Point(12, 408);
+            this.skinLabel1.Name = "skinLabel1";
+            this.skinLabel1.Size = new System.Drawing.Size(0, 17);
+            this.skinLabel1.TabIndex = 2;
+            // 
             // ReferenceComponents
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(642, 450);
+            this.Controls.Add(this.skinLabel1);
             this.Controls.Add(this.skinButton1);
             this.Controls.Add(this.skinGroupBox1);
             this.MaximizeBox = false;
@@ -129,8 +144,10 @@
             this.Opacity = 0.85D;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ReferenceComponents";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ReferenceComponents_FormClosing);
             this.skinGroupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -139,5 +156,6 @@
         private CCWin.SkinControl.SkinGroupBox skinGroupBox1;
         private CCWin.SkinControl.SkinTextBox skinTextBox1;
         private CCWin.SkinControl.SkinButton skinButton1;
+        private CCWin.SkinControl.SkinLabel skinLabel1;
     }
 }

@@ -11,6 +11,10 @@ using ExcelAddIn.Common;
 using MySql.Data.MySqlClient;
 using ExcelAddIn.Data;
 using ExcelAddIn.Events;
+using ExcelAddIn.Loading;
+using System.Threading;
+using System.Diagnostics;
+using ExcelAddIn.Entity;
 
 namespace ExcelAddIn
 {
@@ -136,20 +140,46 @@ namespace ExcelAddIn
             panel.ShowDialog();
         }
 
+        
 
         private void button6_Click(object sender, RibbonControlEventArgs e)
         {
-            string systems = "SAS 145";
-            string fileId = "1681888161170880";
-            string objectId = "1681888161170880.23546";
+            Excel.Range range;
+            
+            range = Globals.ThisAddIn.Application.Selection;
+            if (range.Cells.Count != 1) return;
+            Excel.Range cell = range.Item[1][1];
+            string filter = (string)cell.Value2;
+            if (string.IsNullOrEmpty(filter)) return;
+            if (filter.Contains(","))
+            {
+                filter = filter.Replace(",", "','");
+            }
+            
+            ParameterizedThreadStart thread = new ParameterizedThreadStart(UpdateReferenceComponents);
+            
+            LoadingHelper.ShowLoading("正在处理中，请稍候...", null , thread, new ReferencePipeline {
+                objectId = "1681888161170880.23546",
+                fileId = "1681888161170880",
+                filterSystem = filter
+            });
+            refercomponents.ShowDialog();
+        }
+        
+
+        private void UpdateReferenceComponents(object param)
+        {
+            ReferencePipeline pipeline = param as ReferencePipeline;
+
             //弹出新窗体，查询指定的系统下构件集合
             DataSource dataSource = new DataSource();
             MySqlConnection connection = (MySqlConnection)dataSource.GetCurrentConnection("mysql");
             StringBuilder builder = new StringBuilder();
+            int count = 0;
             using (connection)
             {
                 connection.Open();
-                MySqlCommand cmd = new MySqlCommand(string.Format(ExcuteSql.SYSTEM_FILTER, systems, fileId), connection);
+                MySqlCommand cmd = new MySqlCommand(string.Format(ExcuteSql.SYSTEM_FILTER, pipeline.filterSystem, pipeline.fileId), connection);
                 MySqlDataReader reader = cmd.ExecuteReader();
                 builder.Append("[");
                 while (reader.Read())
@@ -157,13 +187,12 @@ namespace ExcelAddIn
                     object o = reader[0];
                     builder.Append("\"");
                     builder.Append(o.ToString()).Append("\",");
+                    count++;
                 }
                 builder.Append("]");
                 builder.Remove(builder.Length - 2, 1);
             }
-            SendMsgEvent(this, new CustonEventArgs() { Text = builder.ToString() , ObjectId = objectId });
-            refercomponents.ShowDialog();
-
+            SendMsgEvent(this, new CustonEventArgs() { Text = builder.ToString(), ObjectId = pipeline.objectId ,Count = count});
         }
     }
 }

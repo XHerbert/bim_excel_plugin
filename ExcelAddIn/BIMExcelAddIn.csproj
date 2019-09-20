@@ -206,8 +206,17 @@
     <Compile Include="Common\Settings.cs" />
     <Compile Include="Data\ExcuteSql.cs" />
     <Compile Include="Entity\ConnectionEntity.cs" />
+    <Compile Include="Entity\ReferencePipeline.cs" />
     <Compile Include="Entity\SettingEntity.cs" />
     <Compile Include="Events\CustonEventArgs.cs" />
+    <Compile Include="Loading\FrmLoading.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Loading\FrmLoading.Designer.cs">
+      <DependentUpon>FrmLoading.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Loading\LoadingDot.cs" />
+    <Compile Include="Loading\LoadingHelper.cs" />
     <Compile Include="QueryConfigPanel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -235,6 +244,9 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <EmbeddedResource Include="Loading\FrmLoading.resx">
+      <DependentUpon>FrmLoading.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="QueryConfigPanel.resx">
       <DependentUpon>QueryConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
@@ -307,6 +319,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\CSkin.dll" />
+    <None Include="Resources\index.triple-gears-loading-icon.gif" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
